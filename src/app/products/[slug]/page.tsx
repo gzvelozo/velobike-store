@@ -1,10 +1,19 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { getProduct, formatPrice } from "@/lib/products";
+import { getProduct, formatPrice, products } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { HsaBadge } from "@/components/HsaBadge";
+import { ProductCard } from "@/components/ProductCard";
 import { useState } from "react";
+import Link from "next/link";
+
+const categoryEmoji: Record<string, string> = {
+  "fitness-equipment": "🚴‍♂️",
+  "health-monitoring": "⌚",
+  supplements: "🧬",
+  "recovery-devices": "🔋",
+};
 
 export default function ProductPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -15,8 +24,12 @@ export default function ProductPage() {
 
   if (!product) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <p className="text-lg text-gray-500">Product not found</p>
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
+        <p className="text-5xl">🔍</p>
+        <p className="text-lg font-medium text-stone-600">Product not found</p>
+        <Link href="/" className="text-sm text-emerald-700 underline underline-offset-2">
+          Back to shop
+        </Link>
       </div>
     );
   }
@@ -27,68 +40,116 @@ export default function ProductPage() {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const otherProducts = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12">
-      <button
-        onClick={() => router.back()}
-        className="mb-6 text-sm text-gray-500 hover:text-gray-700"
-      >
-        ← Back to shop
-      </button>
+    <>
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        {/* Breadcrumb */}
+        <nav className="mb-8 flex items-center gap-2 text-sm text-stone-400">
+          <Link href="/" className="transition hover:text-stone-600">Shop</Link>
+          <span>/</span>
+          <span className="text-stone-600">{product.name}</span>
+        </nav>
 
-      <div className="grid gap-10 md:grid-cols-2">
-        {/* Product image */}
-        <div className="flex items-center justify-center rounded-2xl bg-gray-100 p-12">
-          <div className="text-9xl">
-            {product.category === "fitness-equipment" && "🚴"}
-            {product.category === "health-monitoring" && "📡"}
-            {product.category === "supplements" && "🥤"}
-            {product.category === "recovery-devices" && "💆"}
+        <div className="grid gap-12 lg:grid-cols-2">
+          {/* Product image */}
+          <div className="flex items-center justify-center rounded-3xl bg-gradient-to-b from-stone-100 to-stone-50 p-16">
+            <span className="text-[120px] drop-shadow-sm">
+              {categoryEmoji[product.category] || "📦"}
+            </span>
           </div>
-        </div>
 
-        {/* Product details */}
-        <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-gray-400">
-            {product.brand}
-          </p>
-          <h1 className="mt-2 text-3xl font-bold text-gray-900">{product.name}</h1>
-          <p className="mt-4 text-lg text-gray-600">{product.description}</p>
-
-          <p className="mt-6 text-3xl font-bold text-gray-900">
-            {formatPrice(product.price)}
-          </p>
-
-          {product.hsaEligible && (
-            <div className="mt-4">
-              <HsaBadge />
-            </div>
-          )}
-
-          <button
-            onClick={handleAdd}
-            className={`mt-6 w-full rounded-lg py-3 text-lg font-semibold text-white transition ${
-              added
-                ? "bg-emerald-600"
-                : "bg-gray-900 hover:bg-gray-800"
-            }`}
-          >
-            {added ? "✓ Added to Cart" : "Add to Cart"}
-          </button>
-
-          {product.hsaEligible && (
-            <p className="mt-3 text-center text-xs text-gray-500">
-              You&apos;ll be asked to complete a short health survey after checkout,
-              reviewed by a licensed provider
+          {/* Product details */}
+          <div className="flex flex-col justify-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+              {product.brand}
             </p>
-          )}
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-stone-900 lg:text-4xl">
+              {product.name}
+            </h1>
+            <p className="mt-4 text-base leading-relaxed text-stone-500">
+              {product.description}
+            </p>
 
-          <div className="mt-8 rounded-lg bg-gray-50 p-4">
-            <h3 className="text-sm font-semibold text-gray-700">HSA/FSA Eligibility</h3>
-            <p className="mt-1 text-sm text-gray-500">{product.hsaReason}</p>
+            <div className="mt-8 flex items-baseline gap-3">
+              <span className="text-3xl font-bold text-stone-900">
+                {formatPrice(product.price)}
+              </span>
+              {product.hsaEligible && (
+                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                  HSA/FSA eligible
+                </span>
+              )}
+            </div>
+
+            {product.hsaEligible && (
+              <div className="mt-6">
+                <HsaBadge />
+              </div>
+            )}
+
+            <button
+              onClick={handleAdd}
+              className={`btn-press mt-8 w-full rounded-xl py-4 text-base font-semibold transition ${
+                added
+                  ? "bg-emerald-600 text-white"
+                  : "bg-stone-900 text-white hover:bg-stone-800"
+              }`}
+            >
+              {added ? "✓ Added to bag" : "Add to bag"}
+            </button>
+
+            {added && (
+              <button
+                onClick={() => router.push("/cart")}
+                className="mt-3 w-full rounded-xl border border-stone-200 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-50"
+              >
+                View bag & checkout →
+              </button>
+            )}
+
+            {/* Details */}
+            <div className="mt-10 space-y-4 border-t border-stone-200 pt-8">
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 text-lg">🏥</span>
+                <div>
+                  <p className="text-sm font-medium text-stone-800">Medical eligibility</p>
+                  <p className="text-sm text-stone-500">{product.hsaReason}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 text-lg">🚚</span>
+                <div>
+                  <p className="text-sm font-medium text-stone-800">Free shipping</p>
+                  <p className="text-sm text-stone-500">Estimated delivery in 3-5 business days</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 text-lg">↩️</span>
+                <div>
+                  <p className="text-sm font-medium text-stone-800">30-day returns</p>
+                  <p className="text-sm text-stone-500">Hassle-free returns on all orders</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Related products */}
+      {otherProducts.length > 0 && (
+        <section className="border-t border-stone-200 bg-stone-50/50">
+          <div className="mx-auto max-w-6xl px-6 py-16">
+            <h2 className="mb-8 text-xl font-bold text-stone-900">You might also like</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {otherProducts.map((p) => (
+                <ProductCard key={p.slug} product={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
