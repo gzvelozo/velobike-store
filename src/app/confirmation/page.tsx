@@ -42,7 +42,7 @@ function ConfirmationContent() {
               orderReference: sessionId,
               productSku: data.itemSlugs?.split(",")[0] || "unknown",
               productName: data.itemSlugs || "VELOBIKE Purchase",
-              amount: data.amountTotal,
+              amount: Math.round(data.amountTotal / 100),
               currency: "usd",
               customerEmail: data.customerEmail,
             }),
