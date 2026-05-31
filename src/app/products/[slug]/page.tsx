@@ -1,19 +1,13 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { getProduct, formatPrice, products } from "@/lib/products";
+import { getProduct, formatPrice, products, categoryMeta, type CategoryKey } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { HsaBadge } from "@/components/HsaBadge";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductIllustration } from "@/components/icons/ProductIllustration";
 import { useState } from "react";
 import Link from "next/link";
-
-const categoryEmoji: Record<string, string> = {
-  "fitness-equipment": "🚴‍♂️",
-  "health-monitoring": "⌚",
-  supplements: "🧬",
-  "recovery-devices": "🔋",
-};
 
 export default function ProductPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -41,6 +35,7 @@ export default function ProductPage() {
   };
 
   const otherProducts = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+  const meta = categoryMeta[product.category as CategoryKey];
 
   return (
     <>
@@ -48,16 +43,19 @@ export default function ProductPage() {
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-sm text-stone-400">
           <Link href="/" className="transition hover:text-stone-600">Shop</Link>
-          <span>/</span>
+          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
           <span className="text-stone-600">{product.name}</span>
         </nav>
 
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Product image */}
-          <div className="flex items-center justify-center rounded-3xl bg-gradient-to-b from-stone-100 to-stone-50 p-16">
-            <span className="text-[120px] drop-shadow-sm">
-              {categoryEmoji[product.category] || "📦"}
-            </span>
+          <div className={`relative flex items-center justify-center rounded-3xl bg-gradient-to-br ${meta?.gradient || "from-stone-800 to-stone-700"} p-16`}>
+            <ProductIllustration slug={product.slug} className="h-48 w-48 text-white/60" />
+            {meta && (
+              <span className={`absolute right-5 top-5 text-[10px] font-bold uppercase tracking-widest ${meta.accent} opacity-50`}>
+                {meta.label}
+              </span>
+            )}
           </div>
 
           {/* Product details */}
@@ -68,9 +66,21 @@ export default function ProductPage() {
             <h1 className="mt-2 text-3xl font-bold tracking-tight text-stone-900 lg:text-4xl">
               {product.name}
             </h1>
-            <p className="mt-4 text-base leading-relaxed text-stone-500">
+            <p className="mt-1 text-sm text-stone-400">{product.tagline}</p>
+            <p className="mt-5 text-base leading-relaxed text-stone-500">
               {product.description}
             </p>
+
+            {/* Specs chips */}
+            {product.specs && product.specs.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {product.specs.map((spec) => (
+                  <span key={spec} className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-600">
+                    {spec}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <div className="mt-8 flex items-baseline gap-3">
               <span className="text-3xl font-bold text-stone-900">
@@ -110,28 +120,18 @@ export default function ProductPage() {
             )}
 
             {/* Details */}
-            <div className="mt-10 space-y-4 border-t border-stone-200 pt-8">
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 text-lg">🏥</span>
-                <div>
-                  <p className="text-sm font-medium text-stone-800">Medical eligibility</p>
-                  <p className="text-sm text-stone-500">{product.hsaReason}</p>
+            <div className="mt-10 grid grid-cols-3 gap-4 border-t border-stone-200 pt-8">
+              {[
+                { icon: "🏥", title: "Medical eligibility", desc: product.hsaReason },
+                { icon: "🚚", title: "Free shipping", desc: "3-5 business days" },
+                { icon: "↩️", title: "30-day returns", desc: "Hassle-free" },
+              ].map((detail) => (
+                <div key={detail.title} className="text-center">
+                  <span className="text-xl">{detail.icon}</span>
+                  <p className="mt-2 text-xs font-semibold text-stone-700">{detail.title}</p>
+                  <p className="mt-0.5 text-[11px] text-stone-400 line-clamp-2">{detail.desc}</p>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 text-lg">🚚</span>
-                <div>
-                  <p className="text-sm font-medium text-stone-800">Free shipping</p>
-                  <p className="text-sm text-stone-500">Estimated delivery in 3-5 business days</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 text-lg">↩️</span>
-                <div>
-                  <p className="text-sm font-medium text-stone-800">30-day returns</p>
-                  <p className="text-sm text-stone-500">Hassle-free returns on all orders</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,17 +1,11 @@
 "use client";
 
 import { useCart } from "@/lib/cart-context";
-import { formatPrice } from "@/lib/products";
+import { formatPrice, categoryMeta, type CategoryKey } from "@/lib/products";
 import { HsaBadge } from "@/components/HsaBadge";
+import { ProductIllustration } from "@/components/icons/ProductIllustration";
 import { useState } from "react";
 import Link from "next/link";
-
-const categoryEmoji: Record<string, string> = {
-  "fitness-equipment": "🚴‍♂️",
-  "health-monitoring": "⌚",
-  supplements: "🧬",
-  "recovery-devices": "🔋",
-};
 
 export default function CheckoutPage() {
   const { items, totalPrice } = useCart();
@@ -67,20 +61,23 @@ export default function CheckoutPage() {
           <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-stone-200/60">
             <h2 className="text-sm font-semibold text-stone-900">Order summary</h2>
             <div className="mt-4 space-y-4">
-              {items.map((item) => (
-                <div key={item.product.slug} className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-stone-50 text-2xl">
-                    {categoryEmoji[item.product.category] || "📦"}
+              {items.map((item) => {
+                const meta = categoryMeta[item.product.category as CategoryKey];
+                return (
+                  <div key={item.product.slug} className="flex items-center gap-4">
+                    <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${meta?.gradient || "from-stone-800 to-stone-700"}`}>
+                      <ProductIllustration slug={item.product.slug} className="h-8 w-8 text-white/60" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="truncate text-sm font-medium text-stone-900">{item.product.name}</p>
+                      <p className="text-xs text-stone-400">Qty {item.quantity}</p>
+                    </div>
+                    <p className="text-sm font-semibold text-stone-900">
+                      {formatPrice(item.product.price * item.quantity)}
+                    </p>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="truncate text-sm font-medium text-stone-900">{item.product.name}</p>
-                    <p className="text-xs text-stone-400">Qty {item.quantity}</p>
-                  </div>
-                  <p className="text-sm font-semibold text-stone-900">
-                    {formatPrice(item.product.price * item.quantity)}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -117,7 +114,7 @@ export default function CheckoutPage() {
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  Redirecting…
+                  Redirecting to Stripe…
                 </span>
               ) : (
                 `Pay ${formatPrice(totalPrice)}`
