@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const session = event.data.object;
 
     // Save order to Supabase
-    const { error } = await supabase.from("orders").insert({
+    const { error } = await supabaseAdmin.from("orders").insert({
       stripe_session_id: session.id,
       stripe_payment_intent: session.payment_intent,
       customer_email: session.customer_details?.email || null,
