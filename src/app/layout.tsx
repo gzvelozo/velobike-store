@@ -11,8 +11,25 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "VELOBIKE — Premium Cycling & Wellness",
-  description: "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+  title: {
+    default: "VELOBIKE — Premium Cycling & Wellness",
+    template: "%s | VELOBIKE",
+  },
+  description:
+    "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+  openGraph: {
+    type: "website",
+    siteName: "VELOBIKE",
+    title: "VELOBIKE — Premium Cycling & Wellness",
+    description:
+      "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+  },
+  twitter: {
+    card: "summary",
+    title: "VELOBIKE — Premium Cycling & Wellness",
+    description:
+      "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+  },
 };
 
 export default function RootLayout({
