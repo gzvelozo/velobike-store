@@ -8,7 +8,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function CheckoutPage() {
-  const { items, totalPrice } = useCart();
+  const { items, totalPrice, hydrated } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -39,6 +39,14 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
+
+  if (!hydrated) {
+    return (
+      <div className="mx-auto max-w-2xl px-6 py-24 text-center">
+        <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-stone-200 border-t-stone-600" />
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (

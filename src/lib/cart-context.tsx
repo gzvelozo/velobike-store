@@ -1,11 +1,70 @@
 "use client";
 
-import { Product } from "@/lib/products";
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import { Product, getProduct } from "@/lib/products";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  ReactNode,
+} from "react";
 
 export interface CartItem {
   product: Product;
   quantity: number;
+}
+
+interface StoredCartItem {
+  slug: string;
+  quantity: number;
+}
+
+const CART_STORAGE_KEY = "velomed-cart";
+
+function saveCart(items: CartItem[]) {
+  try {
+    const stored: StoredCartItem[] = items.map((i) => ({
+      slug: i.product.slug,
+      quantity: i.quantity,
+    }));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(stored));
+  } catch {}
+}
+
+function loadCart(): CartItem[] {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) return [];
+
+    const stored: StoredCartItem[] = JSON.parse(raw);
+    if (!Array.isArray(stored)) return [];
+
+    const seen = new Map<string, CartItem>();
+    for (const item of stored) {
+      if (
+        !item ||
+        typeof item.slug !== "string" ||
+        !Number.isInteger(item.quantity) ||
+        item.quantity <= 0
+      ) {
+        continue;
+      }
+
+      const product = getProduct(item.slug);
+      if (!product) continue;
+
+      const existing = seen.get(item.slug);
+      if (existing) {
+        existing.quantity += item.quantity;
+      } else {
+        seen.set(item.slug, { product, quantity: item.quantity });
+      }
+    }
+    return Array.from(seen.values());
+  } catch {
+    return [];
+  }
 }
 
 interface CartContextType {
@@ -16,12 +75,27 @@ interface CartContextType {
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
+  hydrated: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Hydrate from localStorage on mount
+  useEffect(() => {
+    setItems(loadCart());
+    setHydrated(true);
+  }, []);
+
+  // Persist to localStorage on change (skip initial empty state)
+  useEffect(() => {
+    if (hydrated) {
+      saveCart(items);
+    }
+  }, [items, hydrated]);
 
   const addItem = useCallback((product: Product) => {
     setItems((prev) => {
@@ -61,7 +135,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems, totalPrice }}
+      value={{
+        items,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+        totalItems,
+        totalPrice,
+        hydrated,
+      }}
     >
       {children}
     </CartContext.Provider>

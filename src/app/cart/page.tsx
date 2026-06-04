@@ -7,7 +7,15 @@ import { HsaBadge } from "@/components/HsaBadge";
 import { ProductIllustration } from "@/components/icons/ProductIllustration";
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, totalPrice } = useCart();
+  const { items, removeItem, updateQuantity, totalPrice, hydrated } = useCart();
+
+  if (!hydrated) {
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-24 text-center">
+        <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-stone-200 border-t-stone-600" />
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
