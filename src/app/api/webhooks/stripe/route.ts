@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { supabaseAdmin } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Idempotent upsert — relies on unique constraint on stripe_session_id
+    const supabaseAdmin = getSupabaseAdmin();
     const { error } = await supabaseAdmin.from("orders").upsert(
       {
         stripe_session_id: session.id,
