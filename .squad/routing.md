@@ -6,12 +6,19 @@ How to decide who handles what.
 
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
-| {domain 1} | {Name} | {example tasks} |
-| {domain 2} | {Name} | {example tasks} |
-| {domain 3} | {Name} | {example tasks} |
-| Code review | {Name} | Review PRs, check quality, suggest improvements |
-| Testing | {Name} | Write tests, find edge cases, verify fixes |
-| Scope & priorities | {Name} | What to build next, trade-offs, decisions |
+| Architecture & scope decisions | Donna | API design, env-var policy, integration patterns |
+| Next.js pages & layouts | Cameron | Product browse, cart, checkout, confirmation, layout |
+| Tailwind, design tokens, a11y | Cameron | Theme, focus traps, ARIA, responsive design |
+| Cart state & client UX | Cameron | localStorage, cart context, modal interactions |
+| API routes (route handlers) | Gordon | /api/checkout, /api/webhooks/stripe, /api/handoff |
+| Stripe integration | Gordon | Checkout sessions, webhook signatures, idempotency |
+| Supabase schema & RLS | Gordon | Migrations, orders table, anon vs service-role |
+| VeloMED handoff contract | Gordon | Token minting, error handling, env config |
+| Vitest unit & contract tests | Bos | Price validation, webhook signature, env guards |
+| Playwright E2E | Bos | Browse → cart → checkout → confirm → handoff |
+| CI/CD workflows | Bos | GitHub Actions for lint + type-check + test |
+| Code review | Donna + Bos | Review PRs, check quality, suggest improvements |
+| Scope & priorities | Donna | What to build next, trade-offs, decisions |
 | Session logging | Scribe | Automatic — never needs routing |
 | RAI review | Rai | Content safety, bias checks, credential detection, ethical review |
 
