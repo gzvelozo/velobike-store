@@ -12,23 +12,23 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "VELOBIKE — Premium Cycling & Wellness",
-    template: "%s | VELOBIKE",
+    default: "VELONUTRA — Premium Supplements & Wellness",
+    template: "%s | VELONUTRA",
   },
   description:
-    "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+    "Premium supplements, adaptogens, and foundational nutrition. HSA/FSA eligible with VeloMED — instant Letter of Medical Necessity at checkout.",
   openGraph: {
     type: "website",
-    siteName: "VELOBIKE",
-    title: "VELOBIKE — Premium Cycling & Wellness",
+    siteName: "VELONUTRA",
+    title: "VELONUTRA — Premium Supplements & Wellness",
     description:
-      "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+      "Premium supplements, adaptogens, and foundational nutrition. HSA/FSA eligible with VeloMED.",
   },
   twitter: {
     card: "summary",
-    title: "VELOBIKE — Premium Cycling & Wellness",
+    title: "VELONUTRA — Premium Supplements & Wellness",
     description:
-      "Premium bikes, GPS devices, supplements, and recovery tools. HSA/FSA eligible with VeloMED.",
+      "Premium supplements, adaptogens, and foundational nutrition. HSA/FSA eligible with VeloMED.",
   },
 };
 
@@ -48,9 +48,9 @@ export default function RootLayout({
               <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
                 <div>
                   <span className="text-lg font-semibold tracking-tight text-white">
-                    VELO<span className="text-emerald-400">BIKE</span>
+                    VELO<span className="text-emerald-400">NUTRA</span>
                   </span>
-                  <p className="mt-1 text-sm">Premium cycling & wellness gear</p>
+                  <p className="mt-1 text-sm">Premium supplements & wellness</p>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <span className="inline-block h-2 w-2 rounded-full bg-emerald-400" />
@@ -58,7 +58,7 @@ export default function RootLayout({
                 </div>
               </div>
               <div className="mt-8 border-t border-stone-800 pt-6 text-center text-xs text-stone-500">
-                © 2026 VELOBIKE · Demo Store · All test-mode transactions
+                © 2026 VELONUTRA · Demo Store · All test-mode transactions
               </div>
             </div>
           </footer>

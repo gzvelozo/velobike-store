@@ -16,15 +16,15 @@ export default function HomePage() {
               <span className="text-xs font-medium text-emerald-400">HSA / FSA Eligible</span>
             </div>
             <h1 className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight md:text-6xl">
-              Ride better.
+              Feel better.
               <br />
               <span className="bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent">
                 Get reimbursed.
               </span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-stone-400">
-              Premium cycling, recovery & wellness gear — eligible for HSA/FSA
-              reimbursement when you qualify through VeloMED.
+              Premium supplements, adaptogens & foundational nutrition — eligible
+              for HSA/FSA reimbursement when you qualify through VeloMED.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a

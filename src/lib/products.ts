@@ -13,101 +13,101 @@ export interface Product {
 }
 
 export type CategoryKey =
-  | "fitness-equipment"
-  | "health-monitoring"
-  | "supplements"
-  | "recovery-devices";
+  | "foundational-nutrition"
+  | "sleep-recovery"
+  | "stress-adaptogens"
+  | "heart-cognitive";
 
 export const categoryMeta: Record<
   CategoryKey,
   { label: string; gradient: string; accent: string; icon: string }
 > = {
-  "fitness-equipment": {
-    label: "Bikes",
-    gradient: "from-stone-800 to-stone-700",
-    accent: "text-emerald-400",
-    icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z",
-  },
-  "health-monitoring": {
-    label: "Tech",
-    gradient: "from-slate-800 to-slate-700",
-    accent: "text-sky-400",
-    icon: "",
-  },
-  supplements: {
-    label: "Nutrition",
+  "foundational-nutrition": {
+    label: "Foundational",
     gradient: "from-emerald-800 to-emerald-700",
     accent: "text-lime-300",
     icon: "",
   },
-  "recovery-devices": {
-    label: "Recovery",
+  "sleep-recovery": {
+    label: "Sleep & Recovery",
+    gradient: "from-indigo-800 to-indigo-700",
+    accent: "text-indigo-300",
+    icon: "",
+  },
+  "stress-adaptogens": {
+    label: "Stress & Adaptogens",
     gradient: "from-amber-800 to-amber-700",
     accent: "text-amber-300",
+    icon: "",
+  },
+  "heart-cognitive": {
+    label: "Heart & Cognitive",
+    gradient: "from-rose-800 to-rose-700",
+    accent: "text-rose-300",
     icon: "",
   },
 };
 
 export const products: Product[] = [
   {
-    slug: "canyon-grail-cf",
-    name: "Canyon Grail CF SLX 8",
-    brand: "Canyon",
-    tagline: "Conquer any terrain",
-    description:
-      "Premium gravel bike engineered for endurance riding. Carbon frame, Shimano GRX 800 groupset, and 700x40c tires for any terrain. Ideal for cardiovascular fitness and outdoor training.",
-    price: 349900,
-    category: "fitness-equipment",
-    image: "/products/bike.svg",
-    hsaEligible: true,
-    hsaReason:
-      "Qualifies as durable medical equipment for cardiovascular health improvement",
-    specs: ["Carbon frame", "Shimano GRX 800", "700×40c tires", "8.2 kg"],
-  },
-  {
-    slug: "garmin-edge-1050",
-    name: "Garmin Edge 1050",
-    brand: "Garmin",
-    tagline: "Train smarter",
-    description:
-      "Advanced GPS cycling computer with touchscreen display, turn-by-turn navigation, training metrics, and health monitoring. Tracks heart rate zones, VO2 max, and recovery time.",
-    price: 59999,
-    category: "health-monitoring",
-    image: "/products/garmin.svg",
-    hsaEligible: true,
-    hsaReason:
-      "Health monitoring device for tracking cardiovascular fitness metrics",
-    specs: ["3.5″ touchscreen", "GPS + GLONASS", "VO2 max tracking", "20h battery"],
-  },
-  {
     slug: "ag1-athletic-greens",
     name: "AG1 by Athletic Greens",
     brand: "Athletic Greens",
-    tagline: "Daily foundation",
+    tagline: "Daily foundational nutrition",
     description:
-      "Daily foundational nutrition supplement with 75 vitamins, minerals, and whole-food sourced nutrients. Supports gut health, immune function, energy, and recovery.",
+      "Daily foundational nutrition powder with 75 vitamins, minerals, whole-food sourced nutrients, probiotics and adaptogens. Supports gut health, immune function, energy, and micronutrient adequacy in patients with chronic fatigue, digestive disorders, or malabsorption conditions.",
     price: 7900,
-    category: "supplements",
-    image: "/products/supplement.svg",
+    category: "foundational-nutrition",
+    image: "/products/ag1.svg",
     hsaEligible: true,
     hsaReason:
-      "Nutritional supplement for metabolic health and immune support",
-    specs: ["75 ingredients", "Probiotics", "Adaptogens", "30-day supply"],
+      "Nutritional supplement for diagnosed micronutrient deficiency, chronic fatigue, digestive disorders, or immune dysfunction — HSA/FSA eligible with LMN per IRS Pub 502",
+    specs: ["75 whole-food ingredients", "Probiotics + prebiotics", "Adaptogens", "30-day supply"],
   },
   {
-    slug: "theragun-pro",
-    name: "Theragun PRO Plus",
-    brand: "Therabody",
-    tagline: "Recover faster",
+    slug: "magnesium-glycinate",
+    name: "Magnesium Glycinate 200mg",
+    brand: "PureLab Wellness",
+    tagline: "Sleep, muscle recovery, stress support",
     description:
-      "Professional-grade percussive therapy device with 5 attachments, Bluetooth connectivity, and OLED display. Designed for deep muscle treatment, pain relief, and recovery.",
-    price: 39900,
-    category: "recovery-devices",
-    image: "/products/theragun.svg",
+      "Highly bioavailable chelated magnesium bisglycinate for patients with diagnosed magnesium deficiency, insomnia, restless legs, muscle cramps, chronic stress, or migraine prophylaxis. Gentle on the stomach — no laxative effect. USP verified.",
+    price: 3499,
+    category: "sleep-recovery",
+    image: "/products/magnesium.svg",
     hsaEligible: true,
     hsaReason:
-      "Therapeutic device for musculoskeletal pain management and recovery",
-    specs: ["5 attachments", "60 lb force", "OLED display", "Bluetooth"],
+      "Mineral supplement for diagnosed magnesium deficiency, chronic insomnia, restless leg syndrome, or migraine — HSA/FSA eligible with LMN per IRS Pub 502",
+    specs: ["200mg chelated form", "USP verified", "Non-GMO · vegan", "60 capsules · 60-day supply"],
+  },
+  {
+    slug: "ashwagandha-ksm66",
+    name: "Ashwagandha KSM-66 600mg",
+    brand: "PureLab Wellness",
+    tagline: "Adaptogenic stress & cortisol support",
+    description:
+      "Clinical-grade KSM-66 ashwagandha root extract, standardized to 5% withanolides. Supports patients with diagnosed chronic stress, adrenal fatigue, HPA-axis dysregulation, or generalized anxiety. Backed by 24 clinical trials.",
+    price: 4200,
+    category: "stress-adaptogens",
+    image: "/products/ashwagandha.svg",
+    hsaEligible: true,
+    hsaReason:
+      "Adaptogenic supplement for diagnosed chronic stress, adrenal dysfunction, or generalized anxiety — HSA/FSA eligible with LMN when clinically indicated per IRS Pub 502",
+    specs: ["600mg KSM-66 extract", "5% withanolides", "Clinical-grade", "60 capsules · 30-day supply"],
+  },
+  {
+    slug: "omega3-triple-strength",
+    name: "Omega-3 Triple Strength 1500mg",
+    brand: "PureLab Wellness",
+    tagline: "Cardiovascular & cognitive support",
+    description:
+      "IFOS 5-star certified triple-strength omega-3 fish oil with 1500mg EPA + DHA per serving. Molecularly distilled for purity. Indicated for patients with diagnosed cardiovascular risk factors, hypertriglyceridemia, cognitive decline, or inflammatory conditions.",
+    price: 2999,
+    category: "heart-cognitive",
+    image: "/products/omega3.svg",
+    hsaEligible: true,
+    hsaReason:
+      "Essential fatty acid supplement for diagnosed hypertriglyceridemia, cardiovascular disease, cognitive impairment, or chronic inflammation — HSA/FSA eligible with LMN per IRS Pub 502",
+    specs: ["1500mg EPA + DHA", "IFOS 5-star certified", "Molecularly distilled", "60 softgels · 30-day supply"],
   },
 ];
 

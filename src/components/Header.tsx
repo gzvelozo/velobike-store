@@ -14,7 +14,7 @@ export function Header() {
             VELO
           </span>
           <span className="text-xl font-bold tracking-tight text-emerald-600">
-            BIKE
+            NUTRA
           </span>
         </Link>
 
