@@ -51,3 +51,8 @@ next-env.d.ts
 .squad/.cache/
 # Squad: SubSquad activation file (local to this machine)
 .squad-workstream
+
+# OneDrive machine sync conflicts
+*-Cloud*
+*-YOURPC*
+*-LAPTOP-*
