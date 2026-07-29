@@ -67,7 +67,7 @@ export const products: Product[] = [
   {
     slug: "magnesium-glycinate",
     name: "Magnesium Glycinate 200mg",
-    brand: "PureLab Wellness",
+    brand: "VELONUTRA Pure",
     tagline: "Sleep, muscle recovery, stress support",
     description:
       "Highly bioavailable chelated magnesium bisglycinate for patients with diagnosed magnesium deficiency, insomnia, restless legs, muscle cramps, chronic stress, or migraine prophylaxis. Gentle on the stomach — no laxative effect. USP verified.",
@@ -82,7 +82,7 @@ export const products: Product[] = [
   {
     slug: "ashwagandha-ksm66",
     name: "Ashwagandha KSM-66 600mg",
-    brand: "PureLab Wellness",
+    brand: "VELONUTRA Pure",
     tagline: "Adaptogenic stress & cortisol support",
     description:
       "Clinical-grade KSM-66 ashwagandha root extract, standardized to 5% withanolides. Supports patients with diagnosed chronic stress, adrenal fatigue, HPA-axis dysregulation, or generalized anxiety. Backed by 24 clinical trials.",
@@ -97,7 +97,7 @@ export const products: Product[] = [
   {
     slug: "omega3-triple-strength",
     name: "Omega-3 Triple Strength 1500mg",
-    brand: "PureLab Wellness",
+    brand: "VELONUTRA Pure",
     tagline: "Cardiovascular & cognitive support",
     description:
       "IFOS 5-star certified triple-strength omega-3 fish oil with 1500mg EPA + DHA per serving. Molecularly distilled for purity. Indicated for patients with diagnosed cardiovascular risk factors, hypertriglyceridemia, cognitive decline, or inflammatory conditions.",
